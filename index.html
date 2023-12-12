@@ -79,11 +79,7 @@
         <input type="tel" id="telefono" name="telefono" required>
 
         <label for="provincia">Provincia:</label>
-        <select id="provincia" name="provincia" required>
-            <option value="">Selecciona una provincia</option>
-            <option value="Latacunga">Latacunga</option>
-            <option value="Quito">Quito</option>
-            <!-- Agrega más opciones según sea necesario -->
+        <input type="tel" id="provincia" name="provincia" required>
         </select>
 
         <div class="button-group">
@@ -93,23 +89,162 @@
             <button type="button" onclick="limpiarFormulario()">Limpiar</button>
         </div>
     </form> 
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBMJsVpnbOwVOiVNbTZScZdet9qlGigDL0",
+          authDomain: "conexion-8ec0d.firebaseapp.com",
+          databaseURL: "https://conexion-8ec0d-default-rtdb.firebaseio.com",
+          projectId: "conexion-8ec0d",
+          storageBucket: "conexion-8ec0d.appspot.com",
+          messagingSenderId: "679910299749",
+          appId: "1:679910299749:web:9800b464879628b4850e8c"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database= getDatabase(app);
+        window.crearRegistro = function () {
+        const nombre = document.getElementById("nombreProducto").value;
+        const Descripción = document.getElementById("descripcionProducto").value;
+        const Precio = document.getElementById("precioProducto").value;
+        const Cantidad = document.getElementById("cantidadProducto").value;
+        console.log(nombre, Descripción, Precio, Cantidad);
+        push( 
+          ref(database, 'Alexander Iza'),
+          {
+            Nombre: nombre,
+            Descripción: Descripción,
+            Precio: Precio,
+            Cantidad: Cantidad 
+          }).then(() => {
+          // Mensaje de éxito y limpieza de los campos
+          alert('Producto registrado con éxito', 'exito');
+          document.getElementById("nombreProducto").value = '';
+          document.getElementById("descripcionProducto").value = '';
+          document.getElementById("precioProducto").value = '';
+          document.getElementById("cantidadProducto").value = '';
+        }).catch((error) => {
+          // Mensaje de error
+          alert('Error al registrar el producto: ' + error.message, 'error');
+        });
+      };
+        
+  
+        //Consultar Datos
+        window.buscarProductoPorNombre = function () {
+        const nombreProductoBuscado = document.getElementById('nombreProducto').value;
+        consultarRegistrosPorNombre(nombreProductoBuscado);
+        };
+        window.consultarRegistrosPorNombre = function (nombreProductoBuscado) {
+        const registrosRef = ref(database, 'Alexander Iza/');
+        onValue(registrosRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            let productoEncontrado = null;
+            for (const key in data) {
+              if (data[key].Nombre === nombreProductoBuscado) {
+                productoEncontrado = data[key];
+                break;
+              }
+            }
+            if (productoEncontrado) {
+              document.getElementById('nombreProducto').value = productoEncontrado.Nombre || '';
+              document.getElementById('descripcionProducto').value = productoEncontrado.Descripción || '';
+              document.getElementById('precioProducto').value = productoEncontrado.Precio || '';
+              document.getElementById('cantidadProducto').value = productoEncontrado.Cantidad || '';
+              alert('Producto encontrado: ' + productoEncontrado.Nombre);
+            } else {
+              // Manejar el caso en que el producto no se encuentra
+              alert('Producto no encontrado');
+            }
+          }
+        }, {
+          onlyOnce: true
+          });
+        };
+        //Actualizar datos
+        window.actualizarDatosProducto = function () {
+        const nombreProducto = document.getElementById('nombreProducto').value;
+        const nuevaDescripcion = document.getElementById('descripcionProducto').value;
+        const nuevoPrecio = document.getElementById('precioProducto').value;
+        const nuevaCantidad = document.getElementById('cantidadProducto').value;
+  
+        // Referencia a la base de datos de Firebase
+        const registrosRef = ref(database, 'Alexander Iza/');
+  
+        // Buscar el ID del producto basado en el nombre
+        onValue(registrosRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            let productoID = null;
+            for (const key in data) {
+              if (data[key].Nombre === nombreProducto) {
+                productoID = key;
+                break;
+              }
+            }
+            if (productoID) {
+              // Actualizar los datos del producto en Firebase
+              const productoRef = ref(database, Alexander Iza/${productoID});
+              update(productoRef, {
+                Nombre: nombreProducto,
+                Descripción: nuevaDescripcion,
+                Precio: nuevoPrecio,
+                Cantidad: nuevaCantidad
+              }).then(() => {
+                alert('Datos actualizados con éxito');
+                document.getElementById("nombreProducto").value = '';
+                document.getElementById("descripcionProducto").value = '';
+                document.getElementById("precioProducto").value = '';
+                document.getElementById("cantidadProducto").value = '';
+              }).catch((error) => {
+                alert('Error al actualizar datos:', error);
+              });
+            } else {
+              alert('Producto no encontrado para actualizar');
+            }
+          }
+        }, {
+          onlyOnce: true
+        });
+      };     
+    //eliminar Registro
+    window.eliminarProductoPorNombre = function (nombreProducto) {
+    const db = getDatabase();
+    const registrosRef = ref(db, 'Alexander Iza/');
+    onValue(registrosRef, (snapshot) => {
+      const data = snapshot.val();
+      let productoKey = null;
+  
+      for (const key in data) {
+        if (data[key].Nombre === nombreProducto) {
+          productoKey = key;
+          break;
+        }
+      }
+  
+      if (productoKey) {
+        const productoRef = ref(db, Alexander Iza/${productoKey});
+        remove(productoRef)
+          .then(() => {
+            console.log('Producto eliminado con éxito');
+          })
+          .catch((error) => {
+            console.error('Error al eliminar el producto:', error);
+          });
+      } else {
+        console.log('Producto no encontrado para eliminar');
+      }
+    }, {
+      onlyOnce: true
+    });
+  };
 
-    <h2>Listado de Clientes</h2>
-    <table id="clientesTable">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Correo Electrónico</th>
-                <th>Teléfono</th>
-                <th>Provincia</th>
-            </tr>
-        </thead>
-        <tbody id="clientesBody">
-            <!-- Aquí se mostrarán los clientes -->
-        </tbody>
-    </table>
-
-    <script src="cliente.js"></script>
+    
 </body>
 </html>
