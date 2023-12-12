@@ -97,13 +97,13 @@
         // https://firebase.google.com/docs/web/setup#available-libraries
         // Your web app's Firebase configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyBMJsVpnbOwVOiVNbTZScZdet9qlGigDL0",
-          authDomain: "conexion-8ec0d.firebaseapp.com",
-          databaseURL: "https://conexion-8ec0d-default-rtdb.firebaseio.com",
-          projectId: "conexion-8ec0d",
-          storageBucket: "conexion-8ec0d.appspot.com",
-          messagingSenderId: "679910299749",
-          appId: "1:679910299749:web:9800b464879628b4850e8c"
+          apiKey: "AIzaSyBRggj1lV_yQH5ZzkfW0jOU4kbVbe_6KEM",
+          authDomain: "septimo-utc-daad5.firebaseapp.com",
+          databaseURL: "https://septimo-utc-daad5-default-rtdb.firebaseio.com",
+          projectId: "septimo-utc-daad5",
+          storageBucket: "septimo-utc-daad5.appspot.com",
+          messagingSenderId: "191290662072",
+          appId: "1:191290662072:web:d015dadb4333b34d2ba84d"
         };
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
@@ -115,19 +115,21 @@
         const Cantidad = document.getElementById("cantidadProducto").value;
         console.log(nombre, Descripción, Precio, Cantidad);
         push( 
-          ref(database, 'Alexander Iza'),
+          ref(database, 'Andres Chicaiza'),
           {
             Nombre: nombre,
-            Descripción: Descripción,
-            Precio: Precio,
-            Cantidad: Cantidad 
+            Apellido: apellido,
+            CorreoElectronico: email,
+            Telefono: telefono,
+            Provincia: provincia 
           }).then(() => {
           // Mensaje de éxito y limpieza de los campos
           alert('Producto registrado con éxito', 'exito');
-          document.getElementById("nombreProducto").value = '';
-          document.getElementById("descripcionProducto").value = '';
-          document.getElementById("precioProducto").value = '';
-          document.getElementById("cantidadProducto").value = '';
+          document.getElementById("nombre").value = '';
+          document.getElementById("apellido").value = '';
+          document.getElementById("correo electronico").value = '';
+          document.getElementById("telefono").value = '';
+          document.getElementById("provincia").value = '';
         }).catch((error) => {
           // Mensaje de error
           alert('Error al registrar el producto: ' + error.message, 'error');
@@ -136,27 +138,28 @@
         
   
         //Consultar Datos
-        window.buscarProductoPorNombre = function () {
-        const nombreProductoBuscado = document.getElementById('nombreProducto').value;
-        consultarRegistrosPorNombre(nombreProductoBuscado);
+        window.buscarPorNombre = function () {
+        const nombreBuscado = document.getElementById('nombre').value;
+        consultarRegistrosPorNombre(nombre);
         };
-        window.consultarRegistrosPorNombre = function (nombreProductoBuscado) {
-        const registrosRef = ref(database, 'Alexander Iza/');
+        window.consultarRegistrosPorNombre = function (nombre) {
+        const registrosRef = ref(database, 'Andres_Chicaiza/');
         onValue(registrosRef, (snapshot) => {
           const data = snapshot.val();
           if (data) {
             let productoEncontrado = null;
             for (const key in data) {
-              if (data[key].Nombre === nombreProductoBuscado) {
+              if (data[key].Nombre === nombre) {
                 productoEncontrado = data[key];
                 break;
               }
             }
             if (productoEncontrado) {
-              document.getElementById('nombreProducto').value = productoEncontrado.Nombre || '';
-              document.getElementById('descripcionProducto').value = productoEncontrado.Descripción || '';
-              document.getElementById('precioProducto').value = productoEncontrado.Precio || '';
-              document.getElementById('cantidadProducto').value = productoEncontrado.Cantidad || '';
+              document.getElementById('nombre').value = productoEncontrado.Nombre || '';
+              document.getElementById('apellido').value = productoEncontrado.apellido || '';
+              document.getElementById('correoelectronico').value = productoEncontrado.correoelectronico || '';
+              document.getElementById('telefeno').value = productoEncontrado.telefono || '';
+              document.getElementById('provincia').value = productoEncontrado.provincia || '';
               alert('Producto encontrado: ' + productoEncontrado.Nombre);
             } else {
               // Manejar el caso en que el producto no se encuentra
@@ -169,13 +172,14 @@
         };
         //Actualizar datos
         window.actualizarDatosProducto = function () {
-        const nombreProducto = document.getElementById('nombreProducto').value;
-        const nuevaDescripcion = document.getElementById('descripcionProducto').value;
-        const nuevoPrecio = document.getElementById('precioProducto').value;
-        const nuevaCantidad = document.getElementById('cantidadProducto').value;
+        const nombre = document.getElementById('nombre').value;
+        const apellido = document.getElementById('apellido').value;
+        const correoelectronico = document.getElementById('correo electronico').value;
+        const telefono = document.getElementById('telefono').value;
+        const provincia = document.getElementById('provincia').value;
   
         // Referencia a la base de datos de Firebase
-        const registrosRef = ref(database, 'Alexander Iza/');
+        const registrosRef = ref(database, 'Andres_Chicaiza/');
   
         // Buscar el ID del producto basado en el nombre
         onValue(registrosRef, (snapshot) => {
@@ -183,25 +187,27 @@
           if (data) {
             let productoID = null;
             for (const key in data) {
-              if (data[key].Nombre === nombreProducto) {
+              if (data[key].Nombre === nombre) {
                 productoID = key;
                 break;
               }
             }
             if (productoID) {
               // Actualizar los datos del producto en Firebase
-              const productoRef = ref(database, Alexander Iza/${productoID});
+              const productoRef = ref(database, Andres_Chicaiza/${productoID});
               update(productoRef, {
-                Nombre: nombreProducto,
-                Descripción: nuevaDescripcion,
-                Precio: nuevoPrecio,
-                Cantidad: nuevaCantidad
+                Nombre: nombre,
+                Apellido: apellido,
+                CorreoElectronico: email,
+                Telefono: telefono,
+                Provincia: provincia
               }).then(() => {
                 alert('Datos actualizados con éxito');
-                document.getElementById("nombreProducto").value = '';
-                document.getElementById("descripcionProducto").value = '';
-                document.getElementById("precioProducto").value = '';
-                document.getElementById("cantidadProducto").value = '';
+                document.getElementById("nombre").value = '';
+                document.getElementById("apellido").value = '';
+                document.getElementById("email").value = '';
+                document.getElementById("telefono").value = '';
+                document.getElementById("provincia").value = '';
               }).catch((error) => {
                 alert('Error al actualizar datos:', error);
               });
@@ -216,7 +222,7 @@
     //eliminar Registro
     window.eliminarProductoPorNombre = function (nombreProducto) {
     const db = getDatabase();
-    const registrosRef = ref(db, 'Alexander Iza/');
+    const registrosRef = ref(db, 'Andres_Chicaiza/');
     onValue(registrosRef, (snapshot) => {
       const data = snapshot.val();
       let productoKey = null;
@@ -229,7 +235,7 @@
       }
   
       if (productoKey) {
-        const productoRef = ref(db, Alexander Iza/${productoKey});
+        const productoRef = ref(db, Andres_Chicaiza/${productoKey});
         remove(productoRef)
           .then(() => {
             console.log('Producto eliminado con éxito');
@@ -244,7 +250,5 @@
       onlyOnce: true
     });
   };
-
-    
-</body>
-</html>
+ </body>
+ </html>
