@@ -108,12 +108,13 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const database= getDatabase(app);
-        window.crearcliente = function () {
-        const nombre = document.getElementById("nombreProducto").value;
-        const Descripción = document.getElementById("descripcionProducto").value;
-        const Precio = document.getElementById("precioProducto").value;
-        const Cantidad = document.getElementById("cantidadProducto").value;
-        console.log(nombre, Descripción, Precio, Cantidad);
+        window.crearCliente = function () {
+        const nombre = document.getElementById("nombre").value;
+        const apellido = document.getElementById("apellido").value;
+        const correoelectronico = document.getElementById("email").value;
+        const telefono = document.getElementById("telefono").value;
+        const provincia = document.getElementById("provincia").value;
+        console.log(nombre, apellido, email, telefono, provincia);
         push( 
           ref(database, 'Andres Chicaiza'),
           {
@@ -171,7 +172,7 @@
           });
         };
         //Actualizar datos
-        window.actualizarDatosProducto = function () {
+        window.actualizarCliente = function () {
         const nombre = document.getElementById('nombre').value;
         const apellido = document.getElementById('apellido').value;
         const correoelectronico = document.getElementById('correo electronico').value;
@@ -194,7 +195,7 @@
             }
             if (productoID) {
               // Actualizar los datos del producto en Firebase
-              const productoRef = ref(database, Andres_Chicaiza/${productoID});
+              const productoRef = ref(database, `Andres_Chicaiza/${productoID}`);
               update(productoRef, {
                 Nombre: nombre,
                 Apellido: apellido,
@@ -220,7 +221,7 @@
         });
       };     
     //eliminar Registro
-    window.eliminarProductoPorNombre = function (nombreProducto) {
+    window.eliminarCliente = function (nombre) {
     const db = getDatabase();
     const registrosRef = ref(db, 'Andres_Chicaiza/');
     onValue(registrosRef, (snapshot) => {
@@ -228,14 +229,14 @@
       let productoKey = null;
   
       for (const key in data) {
-        if (data[key].Nombre === nombreProducto) {
+        if (data[key].Nombre === nombre) {
           productoKey = key;
           break;
         }
       }
   
       if (productoKey) {
-        const productoRef = ref(db, Andres_Chicaiza/${productoKey});
+        const productoRef = ref(db, `Andres_Chicaiza/${productoKey}`);
         remove(productoRef)
           .then(() => {
             console.log('Producto eliminado con éxito');
@@ -250,5 +251,6 @@
       onlyOnce: true
     });
   };
+  </script>
 </body>
 </html>
