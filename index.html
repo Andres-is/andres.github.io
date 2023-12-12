@@ -136,31 +136,6 @@
           alert('Error al registrar el producto: ' + error.message, 'error');
         });
       };
-      function limpiarFormulario() {
-            // Obtén una referencia al formulario
-            var formulario = document.getElementById('miFormulario');
-
-            // Restablece todos los campos del formulario
-            formulario.reset();
-        }
-    </script>
-</head>
-<body>
-
-    <h2>Mi Formulario</h2>
-
-    <form id="miFormulario">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre">
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
-
-        <!-- Agrega más campos según sea necesario -->
-
-        <button type="button" onclick="limpiarFormulario()">Limpiar Formulario</button>
-    </form>
-  
         //Consultar Datos
         window.buscarPorNombre = function () {
         const nombreBuscado = document.getElementById('nombre').value;
