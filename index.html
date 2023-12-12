@@ -125,7 +125,7 @@
             Provincia: provincia 
           }).then(() => {
           // Mensaje de éxito y limpieza de los campos
-          alert('Producto registrado con éxito', 'exito');
+          alert('Cliente registrado con éxito', 'exito');
           document.getElementById("nombre").value = '';
           document.getElementById("apellido").value = '';
           document.getElementById("email").value = '';
@@ -133,7 +133,7 @@
           document.getElementById("provincia").value = '';
         }).catch((error) => {
           // Mensaje de error
-          alert('Error al registrar el producto: ' + error.message, 'error');
+          alert('Error al registrar el cliente: ' + error.message, 'error');
         });
       };
         //Consultar Datos
@@ -161,8 +161,8 @@
               document.getElementById('provincia').value = productoEncontrado.provincia || '';
               alert('Producto encontrado: ' + productoEncontrado.Nombre);
             } else {
-              // Manejar el caso en que el producto no se encuentra
-              alert('Producto no encontrado');
+              // Manejar el caso en que el cliente no se encuentra
+              alert('Cliente no encontrado');
             }
           }
         }, {
@@ -180,7 +180,7 @@
         // Referencia a la base de datos de Firebase
         const registrosRef = ref(database, 'Andres_Chicaiza/');
   
-        // Buscar el ID del producto basado en el nombre
+        // Buscar el ID del cliente basado en el nombre
         onValue(registrosRef, (snapshot) => {
           const data = snapshot.val();
           if (data) {
@@ -192,7 +192,7 @@
               }
             }
             if (productoID) {
-              // Actualizar los datos del producto en Firebase
+              // Actualizar los datos del cliente en Firebase
               const productoRef = ref(database, `Andres_Chicaiza/${productoID}`);
               update(productoRef, {
                 Nombre: nombre,
@@ -211,7 +211,7 @@
                 alert('Error al actualizar datos:', error);
               });
             } else {
-              alert('Producto no encontrado para actualizar');
+              alert('Cliente no encontrado para actualizar');
             }
           }
         }, {
@@ -237,13 +237,13 @@
         const productoRef = ref(db, `Andres_Chicaiza/${productoKey}`);
         remove(productoRef)
           .then(() => {
-            console.log('Producto eliminado con éxito');
+            console.log('Cliente eliminado con éxito');
           })
           .catch((error) => {
-            console.error('Error al eliminar el producto:', error);
+            console.error('Error al eliminar el cliente:', error);
           });
       } else {
-        console.log('Producto no encontrado para eliminar');
+        console.log('Cliente no encontrado para eliminar');
       }
     }, {
       onlyOnce: true
