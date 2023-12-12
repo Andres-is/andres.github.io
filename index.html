@@ -111,12 +111,12 @@
         window.crearCliente = function () {
         const nombre = document.getElementById("nombre").value;
         const apellido = document.getElementById("apellido").value;
-        const correoelectronico = document.getElementById("correoelectronico").value;
+        const correoelectronico = document.getElementById("email").value;
         const telefono = document.getElementById("telefono").value;
         const provincia = document.getElementById("provincia").value;
         console.log(nombre, apellido, correoelectronico, telefono, provincia);
         push( 
-          ref(database, 'Andres Chicaiza'),
+          ref(database, 'Andres_Chicaiza'),
           {
             Nombre: nombre,
             Apellido: apellido,
@@ -128,7 +128,7 @@
           alert('Producto registrado con éxito', 'exito');
           document.getElementById("nombre").value = '';
           document.getElementById("apellido").value = '';
-          document.getElementById("correoelectronico").value = '';
+          document.getElementById("email").value = '';
           document.getElementById("telefono").value = '';
           document.getElementById("provincia").value = '';
         }).catch((error) => {
@@ -158,7 +158,7 @@
             if (productoEncontrado) {
               document.getElementById('nombre').value = productoEncontrado.Nombre || '';
               document.getElementById('apellido').value = productoEncontrado.apellido || '';
-              document.getElementById('correoelectronico').value = productoEncontrado.correoelectronico || '';
+              document.getElementById('email').value = productoEncontrado.correoelectronico || '';
               document.getElementById('telefeno').value = productoEncontrado.telefono || '';
               document.getElementById('provincia').value = productoEncontrado.provincia || '';
               alert('Producto encontrado: ' + productoEncontrado.Nombre);
@@ -175,7 +175,7 @@
         window.actualizarCliente = function () {
         const nombre = document.getElementById('nombre').value;
         const apellido = document.getElementById('apellido').value;
-        const correoelectronico = document.getElementById('correoelectronico').value;
+        const correoelectronico = document.getElementById('email').value;
         const telefono = document.getElementById('telefono').value;
         const provincia = document.getElementById('provincia').value;
   
@@ -206,7 +206,7 @@
                 alert('Datos actualizados con éxito');
                 document.getElementById("nombre").value = '';
                 document.getElementById("apellido").value = '';
-                document.getElementById("correoelectronico").value = '';
+                document.getElementById("email").value = '';
                 document.getElementById("telefono").value = '';
                 document.getElementById("provincia").value = '';
               }).catch((error) => {
